@@ -1,0 +1,8 @@
+redis
+Flask
+requests
+urllib3
+dumper
+waitress
+pytest
+pyyaml

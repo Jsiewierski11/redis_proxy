@@ -1,0 +1,6 @@
+port: 5000
+cache_size: 5
+host: '0.0.0.0'
+expiry_time: 180
+flask_mode: 'prod'
+redis_url: 'redis://backing-redis:6379'

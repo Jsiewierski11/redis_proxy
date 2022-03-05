@@ -1,0 +1,35 @@
+volumes:
+  redisdata:
+services:
+  backing-redis:
+    image: "redis:5"
+    container_name: "backing-redis"
+    hostname: "backing-redis"
+    tty: true
+    volumes:
+      - redisdata:/data
+      - ./scripts/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - 6379:6379
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      proxy:
+        aliases:
+          - backing-redis
+  flask-proxy:
+    build: .
+    container_name: "flask-proxy"
+    volumes:
+      - .:/usr/src/app
+    ports: 
+      - 5000:5000
+    command: python /usr/src/app/src/proxy/app.py
+    networks:
+      proxy:
+        aliases:
+          - flask-proxy
+
+networks:
+  proxy:
+    external:
+      name: "proxy-network"
